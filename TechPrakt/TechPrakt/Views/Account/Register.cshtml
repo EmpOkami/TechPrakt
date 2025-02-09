@@ -1,31 +1,37 @@
-﻿@model RegisterViewModel
+﻿@model TechPrakt.Models.RegisterViewModel
 
 <h2>Реєстрація</h2>
 
-<form asp-action="Register" asp-controller="Account" method="post">
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+<form asp-action="Register" method="post">
+    <div>
+        <label>Ім'я</label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
-        <span asp-validation-for="Email" class="text-danger"></span>
+    <div>
+        <label>Прізвище</label>
+        <input asp-for="SecondName" />
+        <span asp-validation-for="SecondName"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
+    <div>
+        <label>Email</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
     </div>
 
-    <div class="form-group">
-        <label asp-for="ConfirmPassword"></label>
-        <input asp-for="ConfirmPassword" type="password" class="form-control" />
-        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    <div>
+        <label>Пароль</label>
+        <input asp-for="Password" type="password" />
+        <span asp-validation-for="Password"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Зареєструватися</button>
-</form>
+    <div>
+        <label>Підтвердити пароль</label>
+        <input asp-for="ConfirmPassword" type="password" />
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div>
+
+    <button type="submit">Зареєструватися</button>
+</form> 
