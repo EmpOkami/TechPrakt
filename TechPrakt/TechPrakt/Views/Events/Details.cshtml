@@ -1,0 +1,21 @@
+﻿@model TechPrakt.Models.Exhibitions
+
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+<div class="container">
+    <h2>@Model.Name</h2>
+
+    <img src="@Url.Content("~/img/" + Model.Image)" class="img-fluid" alt="Event Image">
+
+    <p><strong>Опис:</strong> @Model.Description</p>
+    <p><strong>Дата початку:</strong> @Model.Date.ToShortDateString()</p>
+
+    <form asp-controller="Events" asp-action="BuyTicket" method="post">
+        <input type="hidden" name="exhibitionId" value="@Model.Id" />
+        <button type="submit" class="btn btn-success">Купити квиток</button>
+    </form>
+
+    <a asp-controller="Events" asp-action="Index" class="btn btn-secondary mt-3">Назад до списку подій</a>
+</div>

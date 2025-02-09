@@ -10,5 +10,6 @@ namespace TechPrakt.Models
         public int ExhibitionId { get; set; }
         public string TicketType { get; set; }
         public decimal price { get; set; }
+        public Exhibitions Exhibition { get; set; }
     }
 }

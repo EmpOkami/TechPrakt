@@ -20,5 +20,17 @@ namespace TechPrakt.Controllers
             var artifacts = await _context.Artifacts.ToListAsync();
             return View(artifacts);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var artifact = await _context.Artifacts.FindAsync(id);
+
+            if (artifact == null)
+            {
+                return NotFound();
+            }
+
+            return View(artifact);
+        }
     }
 }

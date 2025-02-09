@@ -1,0 +1,24 @@
+﻿@model List<TechPrakt.Models.Exhibitions>
+
+@{
+    ViewData["Title"] = "Майбутні події";
+}
+
+<h2>Майбутні події</h2>
+
+<div class="row">
+    @foreach (var eventItem in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="@Url.Content("~/img/" + eventItem.Image)" class="card-img-top" alt="Image">
+                <div class="card-body">
+                    <h5 class="card-title">@eventItem.Name</h5>
+                    <p class="card-text">@eventItem.Description.Substring(0, Math.Min(100, eventItem.Description.Length))...</p>
+                    <p><strong>Дата:</strong> @eventItem.Date.ToShortDateString()</p>
+                    <a asp-controller="Events" asp-action="Details" asp-route-id="@eventItem.Id" class="btn btn-primary">Детальніше</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
