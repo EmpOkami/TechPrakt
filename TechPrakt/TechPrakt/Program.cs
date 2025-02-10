@@ -37,6 +37,16 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+void ConfigureServices(IServiceCollection services)
+{
+    services.AddControllersWithViews();
+    services.AddSession();
+}
+
+void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+{
+    app.UseSession();
+}
 
 
 app.Run();

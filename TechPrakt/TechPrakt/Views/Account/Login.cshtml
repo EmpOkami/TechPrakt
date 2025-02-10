@@ -1,19 +1,41 @@
 ﻿@model TechPrakt.Models.LoginViewModel
 
-<h2>Вхід</h2>
+@{
+    ViewData["Title"] = "Вхід";
+}
 
-<form asp-action="Login" method="post">
-    <div>
-        <label>Email</label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-primary text-white">
+                    <h3>Вхід</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Account" asp-action="Login" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="Введіть email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Пароль</label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Введіть пароль" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Увійти</button>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p>Немає акаунту? <a asp-controller="Account" asp-action="Register">Зареєструватися</a></p>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div>
-        <label>Пароль</label>
-        <input asp-for="Password" type="password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-
-    <button type="submit">Увійти</button>
-</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

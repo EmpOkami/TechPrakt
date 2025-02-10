@@ -1,0 +1,39 @@
+﻿@model List<TechPrakt.Models.Reviews>
+
+@{
+    ViewData["Title"] = "Відгуки";
+}
+
+<h2>Відгуки</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (Context.Session.GetInt32("UserId") != null)
+{
+    <a class="btn btn-success mb-3" asp-action="Create">Додати відгук</a>
+}
+else
+{
+    <p class="text-muted">Щоб залишити відгук, <a asp-controller="Account" asp-action="Login">увійдіть</a> в систему.</p>
+}
+
+@if (Model.Any())
+{
+    <div class="list-group">
+        @foreach (var review in Model)
+        {
+            <div class="list-group-item">
+                <h5><strong>@review.Name</strong></h5>
+                <p>@review.Comment</p>
+                <small class="text-muted">@review.CreatedAt.ToString("dd.MM.yyyy HH:mm")</small>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Поки що немає відгуків.</p>
+}

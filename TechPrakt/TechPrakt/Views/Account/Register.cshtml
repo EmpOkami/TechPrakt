@@ -1,37 +1,59 @@
 ﻿@model TechPrakt.Models.RegisterViewModel
 
-<h2>Реєстрація</h2>
+@{
+    ViewData["Title"] = "Реєстрація";
+}
 
-<form asp-action="Register" method="post">
-    <div>
-        <label>Ім'я</label>
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header text-center bg-success text-white">
+                    <h3>Реєстрація</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Account" asp-action="Register" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Ім'я</label>
+                            <input asp-for="Name" class="form-control" placeholder="Введіть ім'я" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="SecondName" class="form-label">Прізвище</label>
+                            <input asp-for="SecondName" class="form-control" placeholder="Введіть прізвище" />
+                            <span asp-validation-for="SecondName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="Введіть email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Пароль</label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Введіть пароль" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label">Підтвердження пароля</label>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Повторіть пароль" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">Зареєструватися</button>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p>Вже маєте акаунт? <a asp-controller="Account" asp-action="Login">Увійти</a></p>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div>
-        <label>Прізвище</label>
-        <input asp-for="SecondName" />
-        <span asp-validation-for="SecondName"></span>
-    </div>
-
-    <div>
-        <label>Email</label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
-    </div>
-
-    <div>
-        <label>Пароль</label>
-        <input asp-for="Password" type="password" />
-        <span asp-validation-for="Password"></span>
-    </div>
-
-    <div>
-        <label>Підтвердити пароль</label>
-        <input asp-for="ConfirmPassword" type="password" />
-        <span asp-validation-for="ConfirmPassword"></span>
-    </div>
-
-    <button type="submit">Зареєструватися</button>
-</form> 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
