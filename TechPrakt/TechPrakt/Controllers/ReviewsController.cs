@@ -1,59 +1,55 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TechPrakt.Models;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
 
-public class ReviewsController : Controller
+namespace TechPrakt.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public ReviewsController(ApplicationDbContext context)
+    public class ReviewsController : Controller
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    public async Task<IActionResult> Index()
-    {
-        var reviews = await _context.Reviews.OrderByDescending(r => r.CreatedAt).ToListAsync();
-        return View(reviews);
-    }
-
-    public IActionResult Create()
-    {
-        var userId = HttpContext.Session.GetInt32("UserId");
-        if (userId == null)
+        public ReviewsController(ApplicationDbContext context)
         {
-            TempData["ErrorMessage"] = "Щоб залишити відгук, потрібно увійти в систему.";
-            return RedirectToAction("Index");
+            _context = context;
         }
 
-        return View(new Reviews());
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Reviews review)
-    {
-        var userId = HttpContext.Session.GetInt32("UserId");
-        var userName = HttpContext.Session.GetString("UserName");
-
-        if (userId == null || string.IsNullOrEmpty(userName))
+        public IActionResult Index()
         {
-            TempData["ErrorMessage"] = "Щоб залишити відгук, потрібно увійти в систему.";
-            return RedirectToAction("Index");
+            var reviews = _context.Reviews.OrderByDescending(r => r.CreatedAt).ToList();
+            return View(reviews);
         }
 
-        review.UserId = userId.Value;
-        review.Name = userName;
-        review.CreatedAt = DateTime.Now;
-
-        if (ModelState.IsValid)
+        public IActionResult Create()
         {
-            _context.Reviews.Add(review);
-            await _context.SaveChangesAsync();
-            TempData["SuccessMessage"] = "Відгук успішно додано!";
-            return RedirectToAction("Index");
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["ErrorMessage"] = "Вам потрібно увійти в систему, щоб залишити відгук.";
+                return RedirectToAction("Login", "Account");
+            }
+            return View();
         }
 
-        return View(review);
+        [HttpPost]
+        public IActionResult Create(Reviews review)
+        {
+            if (HttpContext.Session.GetInt32("UserId") == null)
+            {
+                TempData["ErrorMessage"] = "Вам потрібно увійти в систему, щоб залишити відгук.";
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (ModelState.IsValid)
+            {
+                review.UserId = HttpContext.Session.GetInt32("UserId").Value;
+                review.CreatedAt = DateTime.Now;
+                _context.Reviews.Add(review);
+                _context.SaveChanges();
+                TempData["SuccessMessage"] = "Ваш відгук успішно додано!";
+                return RedirectToAction("Index");
+            }
+
+            return View(review);
+        }
     }
 }
